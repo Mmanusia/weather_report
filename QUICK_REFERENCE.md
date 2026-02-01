@@ -3,6 +3,7 @@
 ## 📌 Start Here (90 detik)
 
 ### Install & Run
+
 ```bash
 cd weather_report
 flutter pub get
@@ -10,24 +11,25 @@ flutter run
 ```
 
 ### What You Get
+
 ✅ Real-time weather  
 ✅ 12-hour forecast  
 ✅ 7-day forecast  
 ✅ Dark mode  
 ✅ Auto refresh  
-✅ GPS location  
+✅ GPS location
 
 ---
 
 ## 🎯 Key Files
 
-| File | Purpose | Edit For |
-|------|---------|----------|
-| `lib/main.dart` | App entry | Theme, Provider setup |
-| `lib/providers/weather_provider.dart` | State | Logic, refresh interval |
-| `lib/services/weather_service.dart` | API | Default location, mappings |
-| `lib/ui/Dashboard_page.dart` | Dashboard | UI layout, colors |
-| `pubspec.yaml` | Dependencies | Add packages |
+| File                                  | Purpose      | Edit For                   |
+| ------------------------------------- | ------------ | -------------------------- |
+| `lib/main.dart`                       | App entry    | Theme, Provider setup      |
+| `lib/providers/weather_provider.dart` | State        | Logic, refresh interval    |
+| `lib/services/weather_service.dart`   | API          | Default location, mappings |
+| `lib/ui/Dashboard_page.dart`          | Dashboard    | UI layout, colors          |
+| `pubspec.yaml`                        | Dependencies | Add packages               |
 
 ---
 
@@ -38,6 +40,7 @@ https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001
 ```
 
 **ADM4 Codes:**
+
 - Jakarta: `31.71.03.1001`
 - Bandung: `32.73.01.1001`
 - Surabaya: `35.78.05.1001`
@@ -49,6 +52,7 @@ https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001
 ## 🔧 Common Changes
 
 ### Change Auto Refresh (20 min → 30 min)
+
 ```dart
 // lib/ui/Dashboard_page.dart, line ~50
 _autoRefreshTimer = Timer.periodic(
@@ -58,18 +62,21 @@ _autoRefreshTimer = Timer.periodic(
 ```
 
 ### Change Default Location
+
 ```dart
 // lib/services/weather_service.dart, line ~35
 return '31.71.03.1001'; // ← Change ADM4 code here
 ```
 
 ### Change Timeout (10s → 20s)
+
 ```dart
 // lib/services/weather_service.dart, line ~12
 const Duration(seconds: 20), // ← Increase timeout
 ```
 
 ### Change Colors (Dark mode)
+
 ```dart
 // lib/main.dart
 colorScheme: ColorScheme.fromSeed(
@@ -101,12 +108,14 @@ Desktop: >1200px    (Full width)
 ## 🔐 Permissions
 
 ### Android (AndroidManifest.xml)
+
 ```xml
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
 ### iOS (Info.plist)
+
 ```xml
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Lokasi diperlukan untuk prakiraan cuaca.</string>
@@ -172,6 +181,7 @@ print('Response: $response');
 ## ⚙️ Configuration
 
 ### Environment Variables (Optional)
+
 ```dart
 // lib/config/environment.dart
 class Environment {
@@ -183,6 +193,7 @@ class Environment {
 ```
 
 ### SharedPreferences (For Persistence)
+
 ```dart
 final prefs = await SharedPreferences.getInstance();
 await prefs.setBool('isDarkMode', true);
@@ -194,18 +205,21 @@ final isDarkMode = prefs.getBool('isDarkMode') ?? false;
 ## 🚀 Build & Release
 
 ### Android APK
+
 ```bash
 flutter build apk --release
 # Output: build/app/outputs/flutter-apk/app-release.apk
 ```
 
 ### iOS IPA
+
 ```bash
 flutter build ios --release
 # Output: build/ios/iphoneos/Runner.app
 ```
 
 ### Web
+
 ```bash
 flutter build web --release
 # Output: build/web/
@@ -216,11 +230,11 @@ flutter build web --release
 ## 📦 Dependencies
 
 ```yaml
-provider: ^6.1.0           # State management
-geolocator: ^10.1.0        # Location
-dio: ^5.3.1                # HTTP client
-intl: ^0.19.0              # Localization
-http: ^1.1.0               # HTTP
+provider: ^6.1.0 # State management
+geolocator: ^10.1.0 # Location
+dio: ^5.3.1 # HTTP client
+intl: ^0.19.0 # Localization
+http: ^1.1.0 # HTTP
 ```
 
 ---
@@ -273,6 +287,7 @@ DailyForecast
 ## 🎨 Color Scheme
 
 ### Light Mode
+
 ```
 Primary: Colors.blue[400-600]
 Background: Colors.white
@@ -281,6 +296,7 @@ Card: Colors.grey[100]
 ```
 
 ### Dark Mode
+
 ```
 Primary: Colors.blue[700-900]
 Background: Colors.grey[900]
@@ -292,13 +308,13 @@ Card: Colors.grey[800]
 
 ## 📈 Performance Targets
 
-| Metric | Target |
-|--------|--------|
-| Startup | < 3s |
-| Dashboard load | < 1s |
-| API response | < 2s |
-| Scroll FPS | >= 60 |
-| Memory | < 100MB |
+| Metric         | Target  |
+| -------------- | ------- |
+| Startup        | < 3s    |
+| Dashboard load | < 1s    |
+| API response   | < 2s    |
+| Scroll FPS     | >= 60   |
+| Memory         | < 100MB |
 
 ---
 
@@ -334,13 +350,13 @@ Build:
 
 ## 🆘 Quick Troubleshoot
 
-| Issue | Fix |
-|-------|-----|
-| Location null | Check GPS + permission |
-| API timeout | Increase timeout duration |
-| Pod errors | `rm -rf ios/Pods && pod install` |
-| Hot reload fail | `flutter clean && flutter run` |
-| Dark mode missing | Check `main.dart` theme setup |
+| Issue             | Fix                              |
+| ----------------- | -------------------------------- |
+| Location null     | Check GPS + permission           |
+| API timeout       | Increase timeout duration        |
+| Pod errors        | `rm -rf ios/Pods && pod install` |
+| Hot reload fail   | `flutter clean && flutter run`   |
+| Dark mode missing | Check `main.dart` theme setup    |
 
 ---
 
@@ -356,6 +372,7 @@ Build:
 ## 💡 Tips & Tricks
 
 ### Faster Development
+
 ```bash
 flutter run -d all              # Run on all devices
 flutter run --hot               # Hot reload
@@ -363,6 +380,7 @@ flutter run --verbose          # Debug output
 ```
 
 ### Optimize Build
+
 ```bash
 flutter clean
 flutter pub get
@@ -370,11 +388,13 @@ flutter run --release
 ```
 
 ### Test Specific Feature
+
 ```bash
 flutter test test/services/weather_service_test.dart
 ```
 
 ### Profile Performance
+
 ```bash
 flutter run --profile
 # Open DevTools: http://localhost:8888
@@ -418,6 +438,7 @@ Info.plist ✅
 ## 📞 Support
 
 Need help? Check:
+
 1. DOCUMENTATION.md (Troubleshooting section)
 2. API_EXAMPLES.md (API issues)
 3. SETUP_GUIDE.md (Build issues)

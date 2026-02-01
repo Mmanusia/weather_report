@@ -1,14 +1,17 @@
 // File: API_EXAMPLES.md
+
 # BMKG API - Contoh Request & Response
 
 ## 1. API Endpoint
 
 ### Base URL
+
 ```
 https://api.bmkg.go.id/publik/prakiraan-cuaca
 ```
 
 ### Request Example
+
 ```
 GET https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001
 ```
@@ -18,6 +21,7 @@ GET https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001
 ## 2. ADM4 Codes - Mapping Lokasi
 
 ### Format: Provinsi.Kabupaten.Kecamatan.Desa
+
 ```
 31.71.03.1001 → Jakarta Selatan, DKI Jakarta
 32.73.01.1001 → Bandung, Jawa Barat
@@ -27,6 +31,7 @@ GET https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001
 ```
 
 ### Mapping GPS ke ADM4
+
 ```
 Latitude        Longitude       ADM4 Code       Lokasi
 -6.2            106.8           31.71.03.1001   Jakarta Selatan
@@ -41,11 +46,13 @@ Latitude        Longitude       ADM4 Code       Lokasi
 ## 3. Full Response Example
 
 ### Request
+
 ```bash
 curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ```
 
 ### Response (Success 200)
+
 ```json
 {
   "status": "success",
@@ -131,39 +138,43 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ## 4. Field Documentation
 
 ### Top Level
-| Field | Type | Deskripsi |
-|-------|------|-----------|
+
+| Field  | Type   | Deskripsi                        |
+| ------ | ------ | -------------------------------- |
 | status | string | Status response (success/failed) |
-| data | array | Array of location forecast data |
+| data   | array  | Array of location forecast data  |
 
 ### Data Object
-| Field | Type | Deskripsi |
-|-------|------|-----------|
-| kotkab | string | Nama kota/kabupaten |
-| provinsi | string | Nama provinsi |
-| adm4 | string | Kode administrative level 4 |
-| timeseries | array | Array prakiraan per jam |
+
+| Field      | Type   | Deskripsi                   |
+| ---------- | ------ | --------------------------- |
+| kotkab     | string | Nama kota/kabupaten         |
+| provinsi   | string | Nama provinsi               |
+| adm4       | string | Kode administrative level 4 |
+| timeseries | array  | Array prakiraan per jam     |
 
 ### Timeseries Object
-| Field | Type | Deskripsi | Contoh |
-|-------|------|-----------|---------|
-| datetime | string | Waktu dalam ISO 8601 | "2024-02-01T00:00:00+00:00" |
-| t | integer | Suhu saat ini (°C) | 28 |
-| tmax | integer | Suhu maksimal (°C) | 29 |
-| tmin | integer | Suhu minimal (°C) | 26 |
-| hu | integer | Kelembapan relatif (%) | 75 |
-| wsws | string | Kecepatan angin (m/s) | "3.5" |
-| wd | string | Arah angin (derajat 0-360) | "180" |
-| weather | string | Kode cuaca | "1" |
-| weather_desc | string | Deskripsi cuaca | "Cerah Berawan" |
-| image | string | URL gambar/icon | "image01s.jpg" |
-| pp | integer | Peluang curah hujan (%) | 0-100 |
+
+| Field        | Type    | Deskripsi                  | Contoh                      |
+| ------------ | ------- | -------------------------- | --------------------------- |
+| datetime     | string  | Waktu dalam ISO 8601       | "2024-02-01T00:00:00+00:00" |
+| t            | integer | Suhu saat ini (°C)         | 28                          |
+| tmax         | integer | Suhu maksimal (°C)         | 29                          |
+| tmin         | integer | Suhu minimal (°C)          | 26                          |
+| hu           | integer | Kelembapan relatif (%)     | 75                          |
+| wsws         | string  | Kecepatan angin (m/s)      | "3.5"                       |
+| wd           | string  | Arah angin (derajat 0-360) | "180"                       |
+| weather      | string  | Kode cuaca                 | "1"                         |
+| weather_desc | string  | Deskripsi cuaca            | "Cerah Berawan"             |
+| image        | string  | URL gambar/icon            | "image01s.jpg"              |
+| pp           | integer | Peluang curah hujan (%)    | 0-100                       |
 
 ---
 
 ## 5. Weather Codes Reference
 
 ### Kode Cuaca BMKG
+
 ```
 0   → Cerah (Sunny)
 1   → Cerah Berawan (Partly Cloudy)
@@ -181,6 +192,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ```
 
 ### Emoji Mapping
+
 ```
 0   → ☀️  Cerah
 1   → 🌤️  Cerah Berawan
@@ -199,6 +211,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ## 6. Data Parsing Examples
 
 ### Extract Current Weather
+
 ```dart
 // Ambil data terdekat dengan waktu sekarang
 WeatherTimeseries closest = timeseries
@@ -219,6 +232,7 @@ CurrentWeather current = CurrentWeather(
 ```
 
 ### Extract Hourly Forecasts (Next 12 Hours)
+
 ```dart
 final now = DateTime.now();
 final future12h = now.add(Duration(hours: 12));
@@ -229,12 +243,13 @@ List<WeatherTimeseries> hourlyForecasts = timeseries
 ```
 
 ### Extract Daily Forecasts
+
 ```dart
 Map<String, DailyForecast> dailyMap = {};
 
 for (final ts in timeseries) {
   final dateKey = '${ts.datetime.year}-${ts.datetime.month}-${ts.datetime.day}';
-  
+
   if (!dailyMap.containsKey(dateKey)) {
     dailyMap[dateKey] = DailyForecast(
       date: DateTime(ts.datetime.year, ts.datetime.month, ts.datetime.day),
@@ -264,6 +279,7 @@ List<DailyForecast> forecasts = dailyMap.values.toList()..sort((a,b) => a.date.c
 ## 7. Error Handling
 
 ### Error Response (400)
+
 ```json
 {
   "status": "error",
@@ -273,6 +289,7 @@ List<DailyForecast> forecasts = dailyMap.values.toList()..sort((a,b) => a.date.c
 ```
 
 ### Error Response (404)
+
 ```json
 {
   "status": "error",
@@ -282,11 +299,13 @@ List<DailyForecast> forecasts = dailyMap.values.toList()..sort((a,b) => a.date.c
 ```
 
 ### Network Timeout
+
 ```
 Timeout: Connection timed out after 10 seconds
 ```
 
 ### Empty Data
+
 ```json
 {
   "status": "success",
@@ -315,21 +334,25 @@ Derajat   Arah
 ## 9. Curl Examples for Testing
 
 ### Test API (Jakarta)
+
 ```bash
 curl -X GET "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ```
 
 ### Test API (Bandung)
+
 ```bash
 curl -X GET "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=32.73.01.1001"
 ```
 
 ### Pretty Print Response
+
 ```bash
 curl -s "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001" | jq '.'
 ```
 
 ### Save Response to File
+
 ```bash
 curl -s "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001" > weather_response.json
 ```

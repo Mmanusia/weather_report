@@ -18,6 +18,7 @@ Aplikasi cuaca modern berbasis Flutter yang menampilkan prakiraan cuaca real-tim
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Flutter 3.4.4 atau lebih tinggi
 - Dart 3.4.4 atau lebih tinggi
 - Android SDK / iOS SDK
@@ -25,11 +26,13 @@ Aplikasi cuaca modern berbasis Flutter yang menampilkan prakiraan cuaca real-tim
 ### Installation
 
 1. **Clone Repository**
+
 ```bash
 cd /Users/dewangga/Documents/dio/weather_report
 ```
 
 2. **Install Dependencies**
+
 ```bash
 flutter pub get
 ```
@@ -37,6 +40,7 @@ flutter pub get
 3. **Configure Android Permissions**
 
 Edit `android/app/src/main/AndroidManifest.xml`:
+
 ```xml
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -46,12 +50,14 @@ Edit `android/app/src/main/AndroidManifest.xml`:
 4. **Configure iOS Permissions**
 
 Edit `ios/Runner/Info.plist`:
+
 ```xml
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Aplikasi membutuhkan akses lokasi untuk menampilkan prakiraan cuaca.</string>
 ```
 
 5. **Run App**
+
 ```bash
 flutter run
 ```
@@ -137,34 +143,39 @@ Display on Dashboard
 ## 🎨 UI Components
 
 ### 1. CurrentWeatherCard
+
 Menampilkan cuaca saat ini dengan detail lengkap
 
 ### 2. HourlyForecastCard
+
 Prakiraan per jam dalam horizontal scroll
 
 ### 3. DailyForecastCard
+
 Prakiraan harian dalam vertical list
 
 ### 4. Error States
+
 - LocationDeniedWidget
 - LocationDisabledWidget
 - ErrorWidget
 
 ## 🌡️ Weather Codes Mapping
 
-| Kode | Deskripsi | Emoji |
-|------|-----------|-------|
-| 0 | Cerah | ☀️ |
-| 1 | Cerah Berawan | 🌤️ |
-| 2 | Berawan | ⛅ |
-| 3 | Berawan Tebal | ☁️ |
-| 4 | Hujan Ringan | 🌧️ |
-| 5 | Hujan Sedang | 🌦️ |
-| 10 | Hujan Lebat | ⛈️ |
+| Kode | Deskripsi     | Emoji |
+| ---- | ------------- | ----- |
+| 0    | Cerah         | ☀️    |
+| 1    | Cerah Berawan | 🌤️    |
+| 2    | Berawan       | ⛅    |
+| 3    | Berawan Tebal | ☁️    |
+| 4    | Hujan Ringan  | 🌧️    |
+| 5    | Hujan Sedang  | 🌦️    |
+| 10   | Hujan Lebat   | ⛈️    |
 
 ## 🔐 Permissions
 
 ### Android
+
 ```xml
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -172,6 +183,7 @@ Prakiraan harian dalam vertical list
 ```
 
 ### iOS
+
 ```xml
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Description</string>
@@ -180,6 +192,7 @@ Prakiraan harian dalam vertical list
 ## 📱 Responsiveness
 
 Aplikasi dioptimalkan untuk:
+
 - Phone (320px - 480px)
 - Tablet (600px - 1200px)
 - Desktop (1200px+)
@@ -205,22 +218,26 @@ Consumer<WeatherProvider>(
 ## 🌙 Dark Mode
 
 Toggle dengan button di AppBar. Tema berubah berdasarkan:
+
 - Current system theme
 - User preference
 
 ## 🐛 Troubleshooting
 
 ### Location Permission Error
+
 ```
 Solusi: Check Android/iOS manifest, request permission explicitly
 ```
 
 ### API Connection Error
+
 ```
 Solusi: Check internet connection, verify API endpoint
 ```
 
 ### Date Localization
+
 ```
 Solusi: Gunakan intl package dengan locale 'id_ID'
 ```
@@ -239,16 +256,19 @@ Solusi: Gunakan intl package dengan locale 'id_ID'
 ## 📝 Development
 
 ### Run Development
+
 ```bash
 flutter run
 ```
 
 ### Build Release (Android)
+
 ```bash
 flutter build apk --release
 ```
 
 ### Build Release (iOS)
+
 ```bash
 flutter build ios --release
 ```
@@ -256,6 +276,7 @@ flutter build ios --release
 ## 📚 Documentation
 
 Lihat [DOCUMENTATION.md](DOCUMENTATION.md) untuk dokumentasi lengkap, termasuk:
+
 - Detailed API specification
 - Model data struktur
 - State management detail

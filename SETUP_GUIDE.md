@@ -1,6 +1,7 @@
 # ⚙️ Setup & Configuration Guide
 
 ## Table of Contents
+
 1. [Initial Setup](#initial-setup)
 2. [Android Configuration](#android-configuration)
 3. [iOS Configuration](#ios-configuration)
@@ -63,18 +64,18 @@ flutter analyze
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    
+
     <!-- Location Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    
+
     <!-- Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:label="Cuaca Lokal"
         android:icon="@mipmap/ic_launcher">
-        
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -83,13 +84,13 @@ flutter analyze
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
     </application>
 </manifest>
 ```
@@ -155,19 +156,19 @@ flutter run --release
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
     "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <!-- ... existing keys ... -->
-    
+
     <!-- Location Usage Descriptions -->
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Aplikasi membutuhkan akses ke lokasi Anda saat menggunakan aplikasi untuk menampilkan prakiraan cuaca yang akurat.</string>
-    
+
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>Aplikasi membutuhkan akses ke lokasi Anda untuk menampilkan prakiraan cuaca yang akurat.</string>
-    
+
     <!-- App Transport Security -->
     <key>NSAppTransportSecurity</key>
     <dict>
@@ -184,7 +185,7 @@ flutter run --release
             </dict>
         </dict>
     </key>
-    
+
 </dict>
 </plist>
 ```
@@ -379,6 +380,7 @@ flutter build appbundle --release
 **File:** `ios/Runner.xcodeproj/project.pbxproj`
 
 Or use Xcode:
+
 ```
 Project > Runner > Build Settings > Versioning
 ```
@@ -503,11 +505,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 // In WeatherProvider
 void toggleDarkMode() async {
   _isDarkMode = !_isDarkMode;
-  
+
   // Persist to SharedPreferences
   final prefs = await SharedPreferences.getInstance();
   prefs.setBool('isDarkMode', _isDarkMode);
-  
+
   notifyListeners();
 }
 
@@ -610,24 +612,24 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.4.4'
-      
+          flutter-version: "3.4.4"
+
       - name: Get dependencies
         run: flutter pub get
-      
+
       - name: Run tests
         run: flutter test
-      
+
       - name: Build APK
         run: flutter build apk --release
-      
+
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:

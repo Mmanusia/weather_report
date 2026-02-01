@@ -285,6 +285,7 @@ MyApp (MultiProvider)
 ## 5. Service Layer Design
 
 ### WeatherService
+
 ```dart
 class WeatherService
 ├─ _dio: Dio (HTTP client)
@@ -310,6 +311,7 @@ class WeatherService
 ```
 
 ### LocationService
+
 ```dart
 class LocationService
 ├─ Static Methods:

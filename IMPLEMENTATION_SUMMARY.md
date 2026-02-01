@@ -3,15 +3,17 @@
 ## 📦 Yang Sudah Diimplementasikan
 
 ### ✅ 1. Dependencies (pubspec.yaml)
+
 ```yaml
-http: ^1.1.0               # HTTP client
-geolocator: ^10.1.0        # GPS/Location
-provider: ^6.1.0           # State management
-intl: ^0.19.0              # Date localization
-dio: ^5.3.1                # Advanced HTTP
+http: ^1.1.0 # HTTP client
+geolocator: ^10.1.0 # GPS/Location
+provider: ^6.1.0 # State management
+intl: ^0.19.0 # Date localization
+dio: ^5.3.1 # Advanced HTTP
 ```
 
 ### ✅ 2. Model Data (lib/models/weather_model.dart)
+
 - `BmkgWeatherResponse` - Response root model
 - `BmkgLocation` - Location data dengan timeseries
 - `WeatherTimeseries` - Data cuaca per jam
@@ -22,17 +24,20 @@ dio: ^5.3.1                # Advanced HTTP
 ### ✅ 3. Services
 
 #### WeatherService (lib/services/weather_service.dart)
+
 - `getWeatherForecast(adm4)` - Fetch dari BMKG API
 - `mapLocationToAdm4(lat, lon)` - Map GPS ke ADM4
 - Mapping untuk: Jakarta, Bandung, Surabaya, Medan, Yogyakarta
 - Error handling dengan try-catch
 
 #### WeatherParser (Helper class)
+
 - `extractDailyForecasts()` - Parse 7 hari prakiraan
 - `extractHourlyForecasts()` - Parse 12 jam prakiraan
 - `getCurrentWeather()` - Get cuaca terdekat dengan sekarang
 
 #### LocationService (lib/services/location_service.dart)
+
 - `isLocationServiceEnabled()`
 - `requestLocationPermission()`
 - `checkLocationPermission()`
@@ -42,6 +47,7 @@ dio: ^5.3.1                # Advanced HTTP
 ### ✅ 4. State Management (lib/providers/weather_provider.dart)
 
 #### WeatherState Enum
+
 ```dart
 enum WeatherState {
   initial,           // Initial state
@@ -54,7 +60,9 @@ enum WeatherState {
 ```
 
 #### WeatherProvider (ChangeNotifier)
+
 **Methods:**
+
 - `initialize()` - Init app + get location + fetch weather
 - `fetchWeather(adm4)` - Fetch data BMKG
 - `refreshWeather()` - Manual refresh
@@ -63,6 +71,7 @@ enum WeatherState {
 - `openLocationSettings()` & `openAppSettings()`
 
 **Getters:**
+
 - state, errorMessage, weatherData, currentWeather
 - hourlyForecasts, dailyForecasts, cityName
 - isDarkMode, lastUpdate, currentPosition
@@ -70,10 +79,12 @@ enum WeatherState {
 ### ✅ 5. UI Widgets
 
 #### Loading Components (lib/widgets/loading_skeleton.dart)
+
 - `ShimmerLoading` - Shimmer animation component
 - `DashboardLoadingSkeleton` - Full skeleton layout
 
 #### Weather Cards (lib/widgets/weather_cards.dart)
+
 - `CurrentWeatherCard` - Main weather display
   - Location, update time, temperature
   - Weather description + emoji
@@ -87,11 +98,13 @@ enum WeatherState {
   - Rain chance percentage
 
 #### Error States (lib/widgets/error_states.dart)
+
 - `LocationDeniedWidget` - Permission denied UI
 - `LocationDisabledWidget` - GPS disabled UI
 - `ErrorWidget` - General error display
 
 #### Dashboard Page (lib/ui/Dashboard_page.dart)
+
 - Auto refresh timer (20 menit)
 - Pull-to-refresh support
 - Responsive layout dengan ListView
@@ -101,6 +114,7 @@ enum WeatherState {
 ### ✅ 6. Main App (lib/main.dart)
 
 **Setup:**
+
 - MultiProvider dengan WeatherProvider
 - Material3 theme
 - Light & Dark theme configuration
@@ -110,6 +124,7 @@ enum WeatherState {
 ### ✅ 7. Splash Screen (lib/splashscreen_page.dart)
 
 **Features:**
+
 - Provider initialization di initState
 - Loading skeleton sambil fetch data
 - Timer 2 detik sebelum navigate
@@ -120,6 +135,7 @@ enum WeatherState {
 ## 🔄 Alur Aplikasi
 
 ### 1. App Start
+
 ```
 main.dart
   └─ MyApp (MultiProvider setup)
@@ -127,6 +143,7 @@ main.dart
 ```
 
 ### 2. Initialization
+
 ```
 SplashScreenPage.initState()
   └─ WeatherProvider.initialize()
@@ -139,6 +156,7 @@ SplashScreenPage.initState()
 ```
 
 ### 3. Main Flow
+
 ```
 GPS (latitude, longitude)
   ↓
@@ -162,6 +180,7 @@ Auto Refresh Timer: 20 minutes
 ```
 
 ### 4. User Interactions
+
 ```
 - Pull-to-Refresh → refreshWeather()
 - Refresh Button → refreshWeather()
@@ -176,26 +195,31 @@ Auto Refresh Timer: 20 minutes
 ## 📊 Data Mapping Example
 
 ### API Response → Model
+
 ```json
 {
   "status": "success",
-  "data": [{
-    "kotkab": "Jakarta Selatan",
-    "provinsi": "DKI Jakarta",
-    "adm4": "31.71.03.1001",
-    "timeseries": [{
-      "datetime": "2024-02-01T00:00:00+00:00",
-      "t": 28,
-      "tmax": 29,
-      "tmin": 26,
-      "hu": 75,
-      "wsws": "3.5",
-      "wd": "180",
-      "weather": "1",
-      "weather_desc": "Cerah Berawan",
-      "pp": 0
-    }]
-  }]
+  "data": [
+    {
+      "kotkab": "Jakarta Selatan",
+      "provinsi": "DKI Jakarta",
+      "adm4": "31.71.03.1001",
+      "timeseries": [
+        {
+          "datetime": "2024-02-01T00:00:00+00:00",
+          "t": 28,
+          "tmax": 29,
+          "tmin": 26,
+          "hu": 75,
+          "wsws": "3.5",
+          "wd": "180",
+          "weather": "1",
+          "weather_desc": "Cerah Berawan",
+          "pp": 0
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -250,6 +274,7 @@ Kode  Deskripsi              Emoji
 ## 🔐 Permissions
 
 ### Android (AndroidManifest.xml)
+
 ```xml
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -257,6 +282,7 @@ Kode  Deskripsi              Emoji
 ```
 
 ### iOS (Info.plist)
+
 ```xml
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Aplikasi membutuhkan akses lokasi untuk menampilkan prakiraan cuaca.</string>
@@ -267,6 +293,7 @@ Kode  Deskripsi              Emoji
 ## 🎯 Features Checklist
 
 ### Core Features
+
 - [x] GPS location detection
 - [x] BMKG API integration
 - [x] Real-time weather display
@@ -277,6 +304,7 @@ Kode  Deskripsi              Emoji
 - [x] Dark/Light mode toggle
 
 ### UI/UX
+
 - [x] Modern minimalist design
 - [x] Loading skeleton with shimmer
 - [x] Responsive layout
@@ -287,6 +315,7 @@ Kode  Deskripsi              Emoji
 - [x] Icons & emojis
 
 ### Technical
+
 - [x] Clean architecture
 - [x] Provider state management
 - [x] Service layer
@@ -310,6 +339,7 @@ Kode  Deskripsi              Emoji
 ## 🚀 Cara Menjalankan
 
 ### Development
+
 ```bash
 # Install dependencies
 flutter pub get
@@ -322,6 +352,7 @@ flutter run --verbose
 ```
 
 ### Build Release
+
 ```bash
 # Android
 flutter build apk --release
@@ -369,6 +400,7 @@ lib/
 ## 🔧 Customization
 
 ### Change Auto Refresh Interval
+
 ```dart
 // lib/ui/Dashboard_page.dart
 _autoRefreshTimer = Timer.periodic(
@@ -378,6 +410,7 @@ _autoRefreshTimer = Timer.periodic(
 ```
 
 ### Change Default Location
+
 ```dart
 // lib/services/weather_service.dart
 static String mapLocationToAdm4(...) {
@@ -387,6 +420,7 @@ static String mapLocationToAdm4(...) {
 ```
 
 ### Change API Timeout
+
 ```dart
 // lib/services/weather_service.dart
 final Dio _dio = Dio(
@@ -418,16 +452,19 @@ final Dio _dio = Dio(
 ### Common Issues
 
 **Issue: Location always null**
+
 - Check permission granted
 - Enable GPS on device
 - Increase timeout in LocationService
 
 **Issue: API returns empty**
+
 - Verify ADM4 code is correct
 - Check internet connection
 - Try with manual ADM4 code
 
 **Issue: Dark mode not persisting**
+
 - Add SharedPreferences to save preference
 - Load preference on app start
 

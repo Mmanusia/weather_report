@@ -1,6 +1,7 @@
 # 📱 Dashboard Cuaca Modern - Dokumentasi Lengkap
 
 ## 📋 Daftar Isi
+
 1. [Overview](#overview)
 2. [Struktur Project](#struktur-project)
 3. [Konfigurasi & Setup](#konfigurasi--setup)
@@ -19,6 +20,7 @@
 Dashboard Cuaca Modern adalah aplikasi Flutter yang menampilkan prakiraan cuaca real-time berdasarkan lokasi GPS pengguna menggunakan API BMKG (Badan Meteorologi, Klimatologi dan Geofisika Indonesia).
 
 ### Fitur Utama:
+
 - ✅ Deteksi lokasi GPS otomatis
 - ✅ Cuaca real-time dengan detail lengkap
 - ✅ Prakiraan per jam (12 jam ke depan)
@@ -64,16 +66,17 @@ flutter pub get
 ```
 
 Dependencies yang dibutuhkan:
+
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  http: ^1.1.0                  # HTTP client
-  geolocator: ^10.1.0           # GPS location
-  provider: ^6.1.0              # State management
-  intl: ^0.19.0                 # Lokalisasi tanggal
-  dio: ^5.3.1                   # HTTP client (advanced)
+  http: ^1.1.0 # HTTP client
+  geolocator: ^10.1.0 # GPS location
+  provider: ^6.1.0 # State management
+  intl: ^0.19.0 # Lokalisasi tanggal
+  dio: ^5.3.1 # HTTP client (advanced)
 ```
 
 ### 2. Konfigurasi Permission (Android)
@@ -182,9 +185,9 @@ GET https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001
 
 ### Query Parameters
 
-| Parameter | Type   | Required | Contoh           | Keterangan                        |
-|-----------|--------|----------|------------------|----------------------------------|
-| adm4      | string | Yes      | 31.71.03.1001    | Kode administrative level 4 BMKG |
+| Parameter | Type   | Required | Contoh        | Keterangan                       |
+| --------- | ------ | -------- | ------------- | -------------------------------- |
+| adm4      | string | Yes      | 31.71.03.1001 | Kode administrative level 4 BMKG |
 
 ### Response Sukses (200)
 
@@ -240,7 +243,7 @@ GET https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001
 class BmkgWeatherResponse {
   final String status;
   final List<BmkgLocation> data;
-  
+
   // Parsing dari JSON
   factory BmkgWeatherResponse.fromJson(Map<String, dynamic> json)
 }
@@ -272,7 +275,7 @@ class WeatherTimeseries {
   final String? weatherDesc;    // Deskripsi cuaca
   final String? image;          // URL image
   final int? pp;                // Peluang hujan (%)
-  
+
   // Helper methods
   String getWeatherDescription()
   String getWeatherEmoji()
@@ -496,11 +499,11 @@ Mapping koordinat GPS ke ADM4 BMKG:
 ```dart
 static String mapLocationToAdm4(double latitude, double longitude) {
   // Jakarta (-6.2, 106.8)
-  if (latitude > -6.5 && latitude < -5.5 && 
+  if (latitude > -6.5 && latitude < -5.5 &&
       longitude > 106.5 && longitude < 107.0) {
     return '31.71.03.1001';
   }
-  
+
   // Default
   return '31.71.03.1001';
 }
@@ -537,11 +540,13 @@ const emojiMap = {
 ### Issue: "Failed to get location"
 
 **Penyebab:**
+
 - Permission belum diberikan
 - GPS disabled di perangkat
 - Timeout koneksi
 
 **Solusi:**
+
 ```dart
 // Pastikan permission sudah granted
 final permission = await Geolocator.checkPermission();
@@ -556,11 +561,13 @@ await Geolocator.openLocationSettings();
 ### Issue: "API returns empty data"
 
 **Penyebab:**
+
 - ADM4 code tidak valid
 - API sedang maintenance
 - Network error
 
 **Solusi:**
+
 ```dart
 // Check response data
 if (response.data.isEmpty) {
@@ -583,6 +590,7 @@ dependencies:
 ```
 
 Gunakan:
+
 ```dart
 final dateFormat = DateFormat('EEE, d MMMM yyyy', 'id_ID');
 ```
@@ -596,11 +604,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void toggleDarkMode() {
   _isDarkMode = !_isDarkMode;
-  
+
   // Save preference
   final prefs = await SharedPreferences.getInstance();
   prefs.setBool('isDarkMode', _isDarkMode);
-  
+
   notifyListeners();
 }
 ```
@@ -646,7 +654,7 @@ Future<BmkgWeatherResponse?> getWeatherForecast({
       baseUrl,
       queryParameters: {'adm4': adm4},
     );
-    
+
     print('Response: ${response.data}');
     // ... rest of code
   }

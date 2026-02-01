@@ -11,21 +11,21 @@
 void main() {
   group('WeatherService', () {
     late WeatherService weatherService;
-    
+
     setUp(() {
       weatherService = WeatherService();
     });
-    
+
     test('mapLocationToAdm4 returns correct code for Jakarta', () {
       final adm4 = WeatherService.mapLocationToAdm4(-6.2, 106.8);
       expect(adm4, equals('31.71.03.1001'));
     });
-    
+
     test('mapLocationToAdm4 returns correct code for Bandung', () {
       final adm4 = WeatherService.mapLocationToAdm4(-6.9, 107.6);
       expect(adm4, equals('32.73.01.1001'));
     });
-    
+
     test('mapLocationToAdm4 returns default for unknown location', () {
       final adm4 = WeatherService.mapLocationToAdm4(0.0, 0.0);
       expect(adm4, isNotEmpty);
@@ -49,7 +49,7 @@ void main() {
       );
       expect(ts.getWeatherEmoji(), equals('☀️'));
     });
-    
+
     test('getWeatherDescription returns correct description', () {
       final ts = WeatherTimeseries(
         datetime: DateTime.now(),
@@ -58,7 +58,7 @@ void main() {
       );
       expect(ts.getWeatherDescription(), equals('Cerah Berawan'));
     });
-    
+
     test('getWindSpeed returns parsed double', () {
       final ts = WeatherTimeseries(
         datetime: DateTime.now(),
@@ -77,6 +77,7 @@ void main() {
 ### 1. Location Permission Flow
 
 **Scenario 1: Permission Not Granted**
+
 - [ ] App starts
 - [ ] Shows "Lokasi diperlukan"
 - [ ] Click "Aktifkan Lokasi"
@@ -85,6 +86,7 @@ void main() {
 - [ ] Dashboard loads with weather
 
 **Scenario 2: Permission Denied**
+
 - [ ] App starts
 - [ ] Shows "Lokasi diperlukan"
 - [ ] Deny permission
@@ -93,6 +95,7 @@ void main() {
 - [ ] Settings app opens
 
 **Scenario 3: Permission Forever Denied**
+
 - [ ] Go to Settings
 - [ ] Disable location permission
 - [ ] App restart
@@ -101,6 +104,7 @@ void main() {
 ### 2. GPS Detection
 
 **Test with Emulator:**
+
 ```bash
 # Android Emulator
 adb emu geo fix -74.0 40.7
@@ -110,6 +114,7 @@ adb emu geo fix -74.0 40.7
 ```
 
 **Test with Real Device:**
+
 - [ ] Turn on GPS
 - [ ] Verify location captured
 - [ ] Check ADM4 mapping correct
@@ -120,6 +125,7 @@ adb emu geo fix -74.0 40.7
 ### 3. API Integration
 
 **Endpoint Testing:**
+
 ```bash
 # Test API directly
 curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
@@ -129,6 +135,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ```
 
 **Response Validation:**
+
 - [ ] Status is "success"
 - [ ] Data array not empty
 - [ ] Contains kotkab & provinsi
@@ -140,6 +147,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ### 4. Current Weather Card
 
 **Display Elements:**
+
 - [ ] City name displays (e.g., "Jakarta Selatan, DKI Jakarta")
 - [ ] Update time shows (e.g., "Update: 14:30")
 - [ ] Temperature displays with emoji
@@ -149,6 +157,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 - [ ] Date format correct (Bahasa Indonesia)
 
 **Interaction:**
+
 - [ ] Refresh button works
 - [ ] Shows loading on refresh
 - [ ] Updates data after refresh
@@ -158,6 +167,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ### 5. Hourly Forecast
 
 **Display:**
+
 - [ ] Shows up to 12 hours of forecast
 - [ ] Each card shows: hour, emoji, temperature
 - [ ] Horizontal scroll works
@@ -165,6 +175,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 - [ ] Emoji matches weather code
 
 **Responsiveness:**
+
 - [ ] Works on phone (small screen)
 - [ ] Works on tablet (large screen)
 - [ ] Scroll smooth
@@ -173,6 +184,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ### 6. Daily Forecast
 
 **Display:**
+
 - [ ] Shows 7 days of forecast
 - [ ] Each row shows: date, emoji, condition, rain%, min/max temp
 - [ ] Dates in correct format (e.g., "Rab, 01 Feb")
@@ -181,6 +193,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 - [ ] Vertical scroll works
 
 **Data Accuracy:**
+
 - [ ] Min temp < max temp
 - [ ] Dates are sequential
 - [ ] No duplicate dates
@@ -189,6 +202,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 ### 7. Auto Refresh
 
 **Test:**
+
 - [ ] App has been open > 20 minutes
 - [ ] Data automatically refreshes
 - [ ] Loading indicator briefly shows
@@ -196,6 +210,7 @@ curl "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001"
 - [ ] Timestamp updates
 
 **Verify:**
+
 ```dart
 // Check timer in debug mode
 // Set interval to 1 minute for testing
@@ -205,6 +220,7 @@ const Duration(minutes: 1)
 ### 8. Pull-to-Refresh
 
 **Test:**
+
 - [ ] Swipe down on dashboard
 - [ ] Refresh indicator shows
 - [ ] Data reloads
@@ -214,6 +230,7 @@ const Duration(minutes: 1)
 ### 9. Dark Mode
 
 **Toggle:**
+
 - [ ] Click moon icon in AppBar
 - [ ] Theme switches to dark
 - [ ] All elements visible in dark
@@ -223,6 +240,7 @@ const Duration(minutes: 1)
 - [ ] Toggle moon to sun icon
 
 **Verify Dark Mode:**
+
 - [ ] Background is dark grey/black
 - [ ] Text is white/light grey
 - [ ] Cards have dark grey background
@@ -232,6 +250,7 @@ const Duration(minutes: 1)
 ### 10. Error States
 
 **API Timeout:**
+
 - [ ] Disconnect internet
 - [ ] Click refresh
 - [ ] Shows error message
@@ -240,12 +259,14 @@ const Duration(minutes: 1)
 - [ ] Refresh success
 
 **Invalid Location:**
+
 - [ ] Force ADM4 to invalid code
 - [ ] Shows error
 - [ ] Retry button works
 - [ ] Fallback to default location
 
 **Network Error:**
+
 - [ ] Airplane mode on
 - [ ] Try to refresh
 - [ ] Error displayed
@@ -255,18 +276,21 @@ const Duration(minutes: 1)
 ### 11. Responsive Design
 
 **Phone Portrait (360x800):**
+
 - [ ] All content visible
 - [ ] No horizontal scroll
 - [ ] Text readable
 - [ ] Buttons clickable
 
 **Tablet Landscape (1200x800):**
+
 - [ ] Content uses full width
 - [ ] Proper spacing
 - [ ] Cards well proportioned
 - [ ] Lists readable
 
 **Desktop (1920x1080):**
+
 - [ ] Proper scaling
 - [ ] Max-width constraints (optional)
 - [ ] Touch targets still usable
@@ -274,6 +298,7 @@ const Duration(minutes: 1)
 ### 12. Weather Code Mapping
 
 **Test Each Code:**
+
 ```
 0   ☀️  Cerah
 1   🌤️  Cerah Berawan
@@ -294,6 +319,7 @@ const Duration(minutes: 1)
 ## 🔍 Verification Checklist
 
 ### Code Quality
+
 - [ ] No compilation errors
 - [ ] No warnings
 - [ ] Proper error handling
@@ -303,6 +329,7 @@ const Duration(minutes: 1)
 - [ ] Consistent naming conventions
 
 ### Architecture
+
 - [ ] Models properly defined
 - [ ] Services separate from UI
 - [ ] Provider pattern implemented
@@ -311,6 +338,7 @@ const Duration(minutes: 1)
 - [ ] Proper dependency injection
 
 ### UI/UX
+
 - [ ] UI matches design
 - [ ] Proper spacing & alignment
 - [ ] Readable fonts
@@ -320,6 +348,7 @@ const Duration(minutes: 1)
 - [ ] Touch targets >= 48x48 dp
 
 ### Performance
+
 - [ ] App loads < 3 seconds
 - [ ] No jank on scroll
 - [ ] API response < 2 seconds
@@ -328,6 +357,7 @@ const Duration(minutes: 1)
 - [ ] Proper image sizing
 
 ### Accessibility
+
 - [ ] Touch targets large enough
 - [ ] Text contrast sufficient
 - [ ] No reliance on color alone
@@ -336,6 +366,7 @@ const Duration(minutes: 1)
 - [ ] Dark mode tested
 
 ### Permissions
+
 - [ ] Location request shown
 - [ ] Permission denial handled
 - [ ] Settings open correctly
@@ -343,6 +374,7 @@ const Duration(minutes: 1)
 - [ ] Works with GPS disabled
 
 ### Localization
+
 - [ ] Dates in Indonesian format
 - [ ] Month names Indonesian
 - [ ] Day names Indonesian
@@ -350,6 +382,7 @@ const Duration(minutes: 1)
 - [ ] All text strings localized
 
 ### Security
+
 - [ ] No sensitive data hardcoded
 - [ ] API calls over HTTPS
 - [ ] No debug logs in release
@@ -362,14 +395,14 @@ const Duration(minutes: 1)
 
 ### Target Metrics
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| App startup | < 3s | ⏳ Test |
-| Dashboard load | < 1s | ⏳ Test |
-| API response | < 2s | ⏳ Test |
-| Scroll FPS | >= 60 | ⏳ Test |
-| Memory usage | < 100MB | ⏳ Test |
-| Battery drain | < 2%/hour | ⏳ Test |
+| Metric         | Target    | Status  |
+| -------------- | --------- | ------- |
+| App startup    | < 3s      | ⏳ Test |
+| Dashboard load | < 1s      | ⏳ Test |
+| API response   | < 2s      | ⏳ Test |
+| Scroll FPS     | >= 60     | ⏳ Test |
+| Memory usage   | < 100MB   | ⏳ Test |
+| Battery drain  | < 2%/hour | ⏳ Test |
 
 ### Debug Commands
 
@@ -389,14 +422,17 @@ flutter run --debug --trace-startup
 ## 🐛 Known Issues & Workarounds
 
 ### Issue 1: Location always returns Jakarta
+
 **Cause:** ADM4 mapping incomplete
 **Workaround:** Add more location mappings in `mapLocationToAdm4()`
 
 ### Issue 2: Dark mode resets on restart
+
 **Cause:** Not persisted
 **Workaround:** Add SharedPreferences to save preference
 
 ### Issue 3: API slow on first load
+
 **Cause:** Cold start + network latency
 **Workaround:** Show loading skeleton
 
@@ -407,6 +443,7 @@ flutter run --debug --trace-startup
 Before release to Play Store / App Store:
 
 ### Functionality
+
 - [ ] All features working
 - [ ] All UI screens display
 - [ ] All buttons functional
@@ -414,6 +451,7 @@ Before release to Play Store / App Store:
 - [ ] Proper error handling
 
 ### Testing
+
 - [ ] Unit tests passing
 - [ ] Manual testing complete
 - [ ] Edge cases handled
@@ -421,6 +459,7 @@ Before release to Play Store / App Store:
 - [ ] Slow network tested
 
 ### Content
+
 - [ ] App icon present
 - [ ] Splash screen displays
 - [ ] All text localized
@@ -428,6 +467,7 @@ Before release to Play Store / App Store:
 - [ ] Terms ready
 
 ### Configuration
+
 - [ ] Android manifest correct
 - [ ] iOS Info.plist correct
 - [ ] Version number correct
@@ -435,6 +475,7 @@ Before release to Play Store / App Store:
 - [ ] Signing certificates valid
 
 ### Performance
+
 - [ ] App size reasonable
 - [ ] Memory usage acceptable
 - [ ] Battery usage acceptable
@@ -442,6 +483,7 @@ Before release to Play Store / App Store:
 - [ ] No crashes on startup
 
 ### Security
+
 - [ ] No hardcoded secrets
 - [ ] HTTPS only
 - [ ] Permissions justified
